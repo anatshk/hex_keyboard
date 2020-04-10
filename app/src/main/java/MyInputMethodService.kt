@@ -11,9 +11,6 @@ import com.example.hex_keyboard.R
 
 class MyInputMethodService : android.inputmethodservice.InputMethodService(), KeyboardView.OnKeyboardActionListener {
     private var caps = false
-    private lateinit var keyboardView: KeyboardView
-    private lateinit var keyboard: Keyboard
-
 
     override fun swipeRight() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -73,6 +70,7 @@ class MyInputMethodService : android.inputmethodservice.InputMethodService(), Ke
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+// TODO: delete this java implementation when kotlin implementation below is added
 //    override fun onCreateInputView(): View {
 //        keyboardView = getLayoutInflater().inflate(R.layout.keyboard_view, null)
 //        keyboard = Keyboard(R.xml.keys_layout)
@@ -80,11 +78,17 @@ class MyInputMethodService : android.inputmethodservice.InputMethodService(), Ke
 //        keyboardView.setOnKeyboardActionListener(this)
 //        return keyboardView
 //    }
+
     override fun onCreateInputView(): View {
         return layoutInflater.inflate(R.layout.keyboard_view, null).apply {
-            if (this is MyKeyboardView) {
+            if (this is MyKeyboardView) { //  TODO: MyKeyboardView is an instance of a custom implementation of KeyboardView that renders a Keyboard.
+                                          //   what does this mean?
                 setOnKeyboardActionListener(this@MyInputMethodService)
-                keyboard = 
+                // keyboard = latinKeyboard
+                keyboard = android.inputmethodservice.Keyboard(
+                    this,
+                    com.example.hex_keyboard.R.xml.keys_layout
+                )
             }
         }
 }
